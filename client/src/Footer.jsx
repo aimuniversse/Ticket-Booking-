@@ -6,14 +6,15 @@ import {
   FaYoutube,
 } from 'react-icons/fa'
 import './Footer.css'
+import logoImage from './assets/logoc.png'
 
 const companyLinks =[]
 const serviceLinks = [
-  'Bus Ticket Booking',
-  // 'Bus Rental',
-  // 'Corporate Travel',
-  // 'School Trips',
-  // 'Holiday Packages',
+  { label: 'Bus Ticket Booking', href: 'https://demo.tickmybus.com/' },
+  // { label: 'Bus Rental', href: '#' },
+  // { label: 'Corporate Travel', href: '#' },
+  // { label: 'School Trips', href: '#' },
+  // { label: 'Holiday Packages', href: '#' },
 ]
 const supportLinks = [
   'Help Center',
@@ -51,10 +52,9 @@ function Footer() {
       <div className="footer-main">
         <div className="footer-column company-column">
           <div className="footer-brand">
-            <span className="brand-icon-footer">🚌</span>
+            <img src={logoImage} alt="Tick my Bus Logo" className="footer-logo" />
             <div>
-              <strong>ANBU TRANSPORT</strong>
-              <p>Reliable buses, premium comfort, effortless booking.</p>
+              <p>Tick my Bus is more than just a bus booking platform - it's a travel companion dedicated to enhancing the travel experience for both customers and businesses, with a primary focus on South India.</p>
             </div>
           </div>
           <ul className="footer-links">
@@ -70,8 +70,8 @@ function Footer() {
           <h3>Services</h3>
           <ul className="footer-links">
             {serviceLinks.map((link) => (
-              <li key={link}>
-                <a href="#">{link}</a>
+              <li key={link.label}>
+                <a href={link.href}>{link.label}</a>
               </li>
             ))}
           </ul>
@@ -92,8 +92,8 @@ function Footer() {
           <h3>Contact</h3>
           <ul className="footer-links contact-links">
             <li>Coimbatore, Tamil Nadu</li>
-            <li>+919092748488</li>
-            <li>anbutransport@gmail.com</li>
+            <li>+91 90925 48488</li>
+            <li>tickmybus@gmail.com</li>
             <li>Mon – Sun • 24/7 Support</li>
           </ul>
           <div className="social-links" aria-label="Social media">
