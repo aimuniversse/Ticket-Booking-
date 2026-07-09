@@ -38,7 +38,7 @@ function Footer() {
         <div>
           <p className="eyebrow">Travel smarter</p>
           <h2>Subscribe for Travel Deals</h2>
-          <p>Receive premium offers, route updates, and exclusive rental discounts.</p>
+          <p>Receive premium offers, route updates, and exclusive discounts.</p>
         </div>
         <form className="newsletter-form">
           <label className="sr-only" htmlFor="newsletter-email">

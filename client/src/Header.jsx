@@ -72,7 +72,7 @@ function Header() {
 
           <div className="user-pill">
             <FaUserCircle />
-            <span>customer login</span>
+            <span>Admin</span>
           </div>
 
           <a className="secondary-btn" href="#login">
