@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "../../styles/TicketRequests.css";
+import api from "../../api/axios";
 const TicketRequestForm = () => {
 
   const [formData, setFormData] = useState({
@@ -22,14 +23,65 @@ const TicketRequestForm = () => {
   });
 
   const [captcha] = useState(() => {
-    const a = Math.floor(Math.random() * 9) + 1;
-    const b = Math.floor(Math.random() * 9) + 1;
-
-    return {
-      question: `${a} + ${b}`,
-      answer: a + b,
-    };
+    const a = Math.floor(Math.random() * 10) + 1;
+    const b = Math.floor(Math.random() * 10) + 1;
+    return { question: `${a} + ${b}`, answer: a + b };
   });
+
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // Captcha Validation
+  if (Number(formData.captcha) !== captcha.answer) {
+    alert("Invalid captcha");
+    return;
+  }
+
+  // Terms Validation
+  if (!formData.agree) {
+    alert("Please accept Terms & Conditions");
+    return;
+  }
+
+  try {
+    const response = await api.post(
+      "customer/request/",
+      formData
+    );
+
+    console.log("Response :", response.data);
+
+    alert("Ticket Request Submitted Successfully!");
+
+    // Reset Form
+    setFormData({
+      from: "",
+      to: "",
+      journeyDate: "",
+      returnDate: "",
+      adults: 1,
+      children: 0,
+      busType: "",
+      boardingPoint: "",
+      dropPoint: "",
+      budget: "",
+      notes: "",
+      fullName: "",
+      phone: "",
+      email: "",
+      captcha: "",
+      agree: false,
+    });
+
+  } catch (error) {
+    console.error(error.response?.data || error);
+
+    alert(
+      error.response?.data?.message ||
+      "Failed to submit ticket request."
+    );
+  }
+};
 
   const handleChange = (e) => {
 
@@ -80,22 +132,6 @@ const TicketRequestForm = () => {
       }));
 
     }
-
-  };
-
-  const handleSubmit = (e) => {
-
-    e.preventDefault();
-
-    if (Number(formData.captcha) !== captcha.answer) {
-
-      alert("Invalid captcha");
-
-      return;
-
-    }
-
-    console.log(formData);
 
   };
 
