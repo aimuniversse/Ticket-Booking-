@@ -1,17 +1,18 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   FaBars,
-  FaBus,
   FaTimes,
   FaUserShield,
   FaUserTie,
 } from "react-icons/fa";
+import logoImage from "../assets/logo.jpeg";
 import "../styles/Header.css";
 
 const navItems = [
-  "Home",
-  "About Us",
-  "Contact",
+  { label: "Home", to: "/" },
+  { label: "About Us", to: "/about" },
+  { label: "Contact", to: "#contact" },
 ];
 
 function Header() {
@@ -26,12 +27,12 @@ function Header() {
 
         <a className="brand" href="/">
           <span className="brand-icon">
-            <FaBus />
+            <img src={logoImage} alt="Tick My Bus" />
           </span>
 
           <span className="brand-text">
-            <strong>ANBU TRANSPORT</strong>
-            <small>Operator Portal</small>
+            <strong>Tick My Bus</strong>
+            <small>Bus Booking</small>
           </span>
         </a>
 
@@ -42,16 +43,28 @@ function Header() {
           <ul className="nav-links">
 
             {navItems.map((item) => (
-              <li key={item}>
-                <a
-                  href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-                  className={`nav-link ${
-                    activeItem === item ? "active" : ""
-                  }`}
-                  onClick={() => setActiveItem(item)}
-                >
-                  {item}
-                </a>
+              <li key={item.label}>
+                {item.to.startsWith("#") ? (
+                  <a
+                    href={item.to}
+                    className={`nav-link ${
+                      activeItem === item.label ? "active" : ""
+                    }`}
+                    onClick={() => setActiveItem(item.label)}
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    to={item.to}
+                    className={`nav-link ${
+                      activeItem === item.label ? "active" : ""
+                    }`}
+                    onClick={() => setActiveItem(item.label)}
+                  >
+                    {item.label}
+                  </Link>
+                )}
               </li>
             ))}
 
@@ -68,10 +81,10 @@ function Header() {
             Operator Login
           </a>
 
-          <a href="/admin-login" className="admin-btn">
+          {/* <a href="/admin-login" className="admin-btn">
             <FaUserShield />
             Admin Login
-          </a>
+          </a> */}
 
         </div>
 
@@ -95,16 +108,29 @@ function Header() {
           <ul className="mobile-links">
 
             {navItems.map((item) => (
-              <li key={item}>
-                <a
-                  href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-                  onClick={() => {
-                    setActiveItem(item);
-                    setMobileOpen(false);
-                  }}
-                >
-                  {item}
-                </a>
+              <li key={item.label}>
+                {item.to.startsWith("#") ? (
+                  <a
+                    href={item.to}
+                    onClick={() => {
+                      setActiveItem(item.label);
+                      setMobileOpen(false);
+                    }}
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    to={item.to}
+                    className="nav-link"
+                    onClick={() => {
+                      setActiveItem(item.label);
+                      setMobileOpen(false);
+                    }}
+                  >
+                    {item.label}
+                  </Link>
+                )}
               </li>
             ))}
 
