@@ -7,7 +7,7 @@ import '../styles/Home.css'
 function App() {
   return (
     <div className="app-shell">
-      <Header />
+      <Header /> 
       <main className="app-main" id="home">
         <section className="hero-section">
           <div className="hero-copy">
@@ -17,10 +17,10 @@ function App() {
               Reserve seats, charter buses, and plan seamless group journeys with a
               premium experience built for modern travelers.
             </p>
-          <div className="hero-actions">
-    <Link className="primary-btn" to="/ticket-request">
-        Book Your Ticket
-    </Link>
+            <div className="hero-actions">
+              <Link className="primary-btn" to="/ticket-request">
+              Book Your Ticket
+              </Link>
 
               {/* <a className="ghost-btn" href="#routes">
                 Explore Routes
