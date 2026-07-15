@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # from datetime import timedelta
 # from pathlib import Path
 
@@ -129,6 +130,8 @@
 #     "accounts.backend.PhoneNumberBackend",
 # ]
 
+=======
+>>>>>>> ac5e7532a4f570cbb352a9e592a0db2112174d39
 """
 Django settings for booking project.
 
@@ -271,3 +274,5 @@ AUTH_USER_MODEL ="accounts.User"
 AUTHENTICATION_BACKENDS=[
     "accounts.backend.PhoneNumberBackend",
 ]
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

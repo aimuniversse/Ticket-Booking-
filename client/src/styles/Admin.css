@@ -53,6 +53,22 @@
   color: #0f172a;
 }
 
+.logout-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  color: #dc2626;
+  font-weight: 700;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 1rem;
+}
+
+.logout-btn:hover {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
 .admin-main {
   flex: 1;
   display: flex;
@@ -282,7 +298,7 @@
 .admin-table td {
   text-align: left;
   padding: 1rem 1.15rem;
-  border-bottom: 1px solid #f1f5f9;
+  /* border-bottom: 1px solid #f1f5f9; */
 }
 
 .admin-table th {

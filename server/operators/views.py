@@ -3,13 +3,15 @@ from django.utils import timezone
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-
+from rest_framework.permissions import AllowAny
 from .serializers import RegistraionOperatorSerilaizers, PendingOpeartorSerializer
 from .models import Operator
 from customer.models import CustomerRequests
 
 
 class OperatorRegistrationAPIView(APIView):
+    permission_classes = [AllowAny]
+
     def post(self, request):
         serializer = RegistraionOperatorSerilaizers(data=request.data)
 
@@ -58,6 +60,50 @@ class ApproveOperatorAPIView(APIView):
 class RejectOperatorAPIView(APIView):
     def post(self, request, operator_id):
         if not request.user.is_authenticated or request.user.role != "admin":
+            return Response({"detail": "Only admins can reject operators."}, status=status.HTTP_403_FORBIDDEN)
+        operator = get_object_or_404(Operator, id=operator_id)
+        operator.user.approval_status = "rejected"
+        operator.user.is_active = False
+        operator.user.save(update_fields=["approval_status", "is_active", "updated_at"])
+        return Response({"message": "Operator registration rejected."}, status=status.HTTP_200_OK)
+
+
+class AdminOverviewAPIView(APIView):
+    """Live admin data. Wallet, support, and transcript records are empty until their models exist."""
+    def get(self, request):
+        if not request.user.is_authenticated or request.user.role != "admin":
+            return Response({"detail": "Only admins can view the dashboard."}, status=status.HTTP_403_FORBIDDEN)
+        operators = Operator.objects.select_related("user").order_by("-created_at")
+        requests = CustomerRequests.objects.order_by("-created_at")
+        operator_data = [{
+            "id": item.id, "name": item.user.name or item.company_name,
+            "email": item.user.email, "mobile": item.user.phone_number,
+            "company_name": item.company_name, "status": item.user.approval_status.title(),
+            "role": "Operator", "created_at": item.created_at,
+        } for item in operators]
+        customers = [{
+            "id": item.request_id or str(item.id), "name": item.name,
+            "mobile": item.phone_number, "email": "", "status": item.status.title(),
+            "role": "Customer", "created_at": item.created_at,
+        } for item in requests]
+        request_data = [{
+            "id": item.request_id or str(item.id), "customer": item.name,
+            "route": f"{item.from_location} → {item.to_location}", "status": item.status,
+            "operator": item.assigned_operator.company_name if item.assigned_operator else None,
+            "created_at": item.created_at,
+        } for item in requests]
+        return Response({
+            "operators": operator_data,
+            "customers": customers,
+            "approvals": [item for item in operator_data if item["status"] == "Pending"],
+            "requests": request_data,
+            "wallets": [], "transactions": [], "transcripts": [], "support_tickets": [],
+        })
+
+
+class RejectOperatorAPIView(APIView):
+    def post(self, request, operator_id):
+        if not request.user.is_authenticated or request.user.role != "admin":
             return Response(
                 {"detail": "Only admins can reject operators."},
                 status=status.HTTP_403_FORBIDDEN,
@@ -92,11 +138,47 @@ class AssignedRequestsAPIView(APIView):
         data = [
             {
                 "id": item.id,
-                "name": item.name,
+                "phone_number": item.phone_number,
+                "from_location": item.from_location,
+                "to_location": item.to_location,
                 "status": item.status,
                 "assigned_operator_id": item.assigned_operator.id if item.assigned_operator else None,
+                "contact_unlocked": item.contact_unlocked,
             }
             for item in requests
         ]
 
+        for item, payload in zip(requests, data):
+            payload.update({
+                "request_id": item.request_id,
+                "from_location": item.from_location,
+                "to_location": item.to_location,
+                "journey_date": item.journey_date,
+                "total_tickets": item.total_tickets,
+                "bus_type": item.bus_type,
+                "expected_price": item.expected_price,
+            })
+            if item.contact_unlocked:
+                payload["name"] = item.name
+                payload["phone_number"] = item.phone_number
+            else:
+                payload.pop("phone_number", None)
+
         return Response(data, status=status.HTTP_200_OK)
+
+
+class AvailableRequestsAPIView(APIView):
+    def get(self, request):
+        if not request.user.is_authenticated or request.user.role != "operator":
+            return Response({"detail": "Only operators can view available requests."}, status=status.HTTP_403_FORBIDDEN)
+        now = timezone.now()
+        CustomerRequests.objects.filter(status="PENDING", expires_at__lte=now).update(status="EXPIRED")
+        requests = CustomerRequests.objects.filter(status="PENDING", expires_at__gt=now).order_by("created_at")
+        # Contact details deliberately never leave this endpoint.
+        return Response([{
+            "id": item.id, "request_id": item.request_id or str(item.id),
+            "from_location": item.from_location, "to_location": item.to_location,
+            "journey_date": item.journey_date, "total_tickets": item.total_tickets,
+            "bus_type": item.bus_type, "expected_price": item.expected_price,
+            "expires_at": item.expires_at,
+        } for item in requests])
