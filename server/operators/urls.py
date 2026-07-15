@@ -4,6 +4,7 @@ from .views import (
     PendingOperatorListAPIView,
     ApproveOperatorAPIView,
     AssignedRequestsAPIView,
+    AvailableRequestsAPIView,
 )
 
 
@@ -28,4 +29,5 @@ urlpatterns = [
         AssignedRequestsAPIView.as_view(),
         name="assigned-requests",
     ),
+    path("requests/available/", AvailableRequestsAPIView.as_view(), name="available-requests"),
 ]
