@@ -137,8 +137,8 @@ function Admin() {
       activeUserTab === "operators"
         ? operators
         : activeUserTab === "customers"
-        ? customers
-        : [...operators, ...customers];
+          ? customers
+          : [...operators, ...customers];
 
     return activeList.filter((user) => {
       const searchValue = userSearch.toLowerCase();
@@ -226,115 +226,115 @@ function Admin() {
 
           {activeSection === "Users" && (
             <section className="admin-section user-management">
-            <div className="section-header">
-              <div>
-                <span className="section-title">User Management</span>
-                <p className="section-subtitle">Manage operators and customers with search, filters, and controls.</p>
-              </div>
-              <div className="tab-group">
-                {USER_TABS.map((tab) => (
-                  <button
-                    key={tab.id}
-                    className={activeUserTab === tab.id ? "tab active" : "tab"}
-                    onClick={() => setActiveUserTab(tab.id)}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="section-controls">
-              <label>
-                Search users
-                <input
-                  type="search"
-                  placeholder={ADMIN_LABELS.userManagement.searchPlaceholder}
-                  value={userSearch}
-                  onChange={(event) => setUserSearch(event.target.value)}
-                />
-              </label>
-              <div className="status-filters">
-                {STATUS_FILTERS.map((status) => (
-                  <button
-                    key={status}
-                    type="button"
-                    className={`filter-chip ${statusFilter === status ? "active" : ""}`}
-                    onClick={() => setStatusFilter(status)}
-                  >
-                    {status}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="table-wrapper">
-              <table className="admin-table">
-                <thead>
-                  <tr>
-                    <th>User</th>
-                    <th>ID</th>
-                    <th>Email</th>
-                    <th>Mobile</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredUsers.map((user) => (
-                    <tr
-                      key={user.id}
-                      className={selectedUser?.id === user.id ? "selected-row" : ""}
-                      onClick={() => handleUserSelect(user)}
+              <div className="section-header">
+                <div>
+                  <span className="section-title">Operator Management</span>
+                  <p className="section-subtitle">Manage operators and customers with search, filters, and controls.</p>
+                </div>
+                <div className="tab-group">
+                  {USER_TABS.map((tab) => (
+                    <button
+                      key={tab.id}
+                      className={activeUserTab === tab.id ? "tab active" : "tab"}
+                      onClick={() => setActiveUserTab(tab.id)}
                     >
-                      <td>{user.name}</td>
-                      <td>{user.id}</td>
-                      <td>{user.email}</td>
-                      <td>{user.mobile}</td>
-                      <td>
-                        <span className={`badge badge-${user.status.toLowerCase()}`}>
-                          {user.status}
-                        </span>
-                      </td>
-                      <td>
-                        <button
-                          type="button"
-                          className="action-btn"
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            handleViewUser(user);
-                          }}
-                        >
-                          View
-                        </button>
-                        <button
-                          type="button"
-                          className="action-btn secondary"
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            handleToggleUserStatus(user);
-                          }}
-                        >
-                          {user.status === "Blocked" ? "Unblock" : "Block"}
-                        </button>
-                      </td>
-                    </tr>
+                      {tab.label}
+                    </button>
                   ))}
-                </tbody>
-              </table>
-            </div>
-            {selectedUser && (
-              <div className="detail-panel">
-                <h4>Selected User</h4>
-                <p><strong>Name:</strong> {selectedUser.name}</p>
-                <p><strong>ID:</strong> {selectedUser.id}</p>
-                <p><strong>Email:</strong> {selectedUser.email}</p>
-                <p><strong>Mobile:</strong> {selectedUser.mobile}</p>
-                <p><strong>Status:</strong> {selectedUser.status}</p>
-                <p><strong>Role:</strong> {selectedUser.role}</p>
+                </div>
               </div>
-            )}
-          </section>
+
+              <div className="section-controls">
+                <label>
+                  Search users
+                  <input
+                    type="search"
+                    placeholder={ADMIN_LABELS.userManagement.searchPlaceholder}
+                    value={userSearch}
+                    onChange={(event) => setUserSearch(event.target.value)}
+                  />
+                </label>
+                <div className="status-filters">
+                  {STATUS_FILTERS.map((status) => (
+                    <button
+                      key={status}
+                      type="button"
+                      className={`filter-chip ${statusFilter === status ? "active" : ""}`}
+                      onClick={() => setStatusFilter(status)}
+                    >
+                      {status}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="table-wrapper">
+                <table className="admin-table">
+                  <thead>
+                    <tr>
+                      <th>User</th>
+                      <th>ID</th>
+                      <th>Email</th>
+                      <th>Mobile</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredUsers.map((user) => (
+                      <tr
+                        key={user.id}
+                        className={selectedUser?.id === user.id ? "selected-row" : ""}
+                        onClick={() => handleUserSelect(user)}
+                      >
+                        <td>{user.name}</td>
+                        <td>{user.id}</td>
+                        <td>{user.email}</td>
+                        <td>{user.mobile}</td>
+                        <td>
+                          <span className={`badge badge-${user.status.toLowerCase()}`}>
+                            {user.status}
+                          </span>
+                        </td>
+                        <td>
+                          <button
+                            type="button"
+                            className="action-btn"
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              handleViewUser(user);
+                            }}
+                          >
+                            View
+                          </button>
+                          <button
+                            type="button"
+                            className="action-btn secondary"
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              handleToggleUserStatus(user);
+                            }}
+                          >
+                            {user.status === "Blocked" ? "Unblock" : "Block"}
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              {selectedUser && (
+                <div className="detail-panel">
+                  <h4>Selected User</h4>
+                  <p><strong>Name:</strong> {selectedUser.name}</p>
+                  <p><strong>ID:</strong> {selectedUser.id}</p>
+                  <p><strong>Email:</strong> {selectedUser.email}</p>
+                  <p><strong>Mobile:</strong> {selectedUser.mobile}</p>
+                  <p><strong>Status:</strong> {selectedUser.status}</p>
+                  <p><strong>Role:</strong> {selectedUser.role}</p>
+                </div>
+              )}
+            </section>
           )}
 
           {activeSection === "Wallets" && (
@@ -537,86 +537,86 @@ function Admin() {
 
           {activeSection === "Support" && (
             <section className="admin-section support-section">
-            <div className="section-header">
-              <div>
-                <span className="section-title">{ADMIN_LABELS.support.title}</span>
-                <p className="section-subtitle">{ADMIN_LABELS.support.subtitle}</p>
+              <div className="section-header">
+                <div>
+                  <span className="section-title">{ADMIN_LABELS.support.title}</span>
+                  <p className="section-subtitle">{ADMIN_LABELS.support.subtitle}</p>
+                </div>
+                <label>
+                  Search tickets
+                  <input
+                    type="search"
+                    placeholder={ADMIN_LABELS.support.searchPlaceholder}
+                    value={ticketSearch}
+                    onChange={(event) => setTicketSearch(event.target.value)}
+                  />
+                </label>
               </div>
-              <label>
-                Search tickets
-                <input
-                  type="search"
-                  placeholder={ADMIN_LABELS.support.searchPlaceholder}
-                  value={ticketSearch}
-                  onChange={(event) => setTicketSearch(event.target.value)}
-                />
-              </label>
-            </div>
 
-            <div className="table-wrapper">
-              <table className="admin-table">
-                <thead>
-                  <tr>
-                    <th>Ticket</th>
-                    <th>Customer</th>
-                    <th>Issue</th>
-                    <th>Priority</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {tickets
-                    .filter((ticket) =>
-                      `${ticket.id} ${ticket.customer} ${ticket.issue}`
-                        .toLowerCase()
-                        .includes(ticketSearch.toLowerCase())
-                    )
-                    .map((ticket) => (
-                      <tr
-                        key={ticket.id}
-                        className={selectedTicket?.id === ticket.id ? "selected-row" : ""}
-                        onClick={() => handleTicketSelect(ticket)}
-                      >
-                        <td>{ticket.id}</td>
-                        <td>{ticket.customer}</td>
-                        <td>{ticket.issue}</td>
-                        <td>
-                          <span className={`badge badge-${ticket.priority.toLowerCase()}`}>
-                            {ticket.priority}
-                          </span>
-                        </td>
-                        <td>
-                          <span className="badge badge-open">{ticket.status}</span>
-                        </td>
-                        <td>
-                          <button
-                            type="button"
-                            className="action-btn"
-                            onClick={(event) => {
-                              event.stopPropagation();
-                              handleOpenTicket(ticket);
-                            }}
-                          >
-                            Open
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
-            </div>
-            {selectedTicket && (
-              <div className="detail-panel">
-                <h4>Selected Ticket</h4>
-                <p><strong>ID:</strong> {selectedTicket.id}</p>
-                <p><strong>Customer:</strong> {selectedTicket.customer}</p>
-                <p><strong>Issue:</strong> {selectedTicket.issue}</p>
-                <p><strong>Priority:</strong> {selectedTicket.priority}</p>
-                <p><strong>Status:</strong> {selectedTicket.status}</p>
+              <div className="table-wrapper">
+                <table className="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Ticket</th>
+                      <th>Customer</th>
+                      <th>Issue</th>
+                      <th>Priority</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tickets
+                      .filter((ticket) =>
+                        `${ticket.id} ${ticket.customer} ${ticket.issue}`
+                          .toLowerCase()
+                          .includes(ticketSearch.toLowerCase())
+                      )
+                      .map((ticket) => (
+                        <tr
+                          key={ticket.id}
+                          className={selectedTicket?.id === ticket.id ? "selected-row" : ""}
+                          onClick={() => handleTicketSelect(ticket)}
+                        >
+                          <td>{ticket.id}</td>
+                          <td>{ticket.customer}</td>
+                          <td>{ticket.issue}</td>
+                          <td>
+                            <span className={`badge badge-${ticket.priority.toLowerCase()}`}>
+                              {ticket.priority}
+                            </span>
+                          </td>
+                          <td>
+                            <span className="badge badge-open">{ticket.status}</span>
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              className="action-btn"
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                handleOpenTicket(ticket);
+                              }}
+                            >
+                              Open
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
               </div>
-            )}
-          </section>
+              {selectedTicket && (
+                <div className="detail-panel">
+                  <h4>Selected Ticket</h4>
+                  <p><strong>ID:</strong> {selectedTicket.id}</p>
+                  <p><strong>Customer:</strong> {selectedTicket.customer}</p>
+                  <p><strong>Issue:</strong> {selectedTicket.issue}</p>
+                  <p><strong>Priority:</strong> {selectedTicket.priority}</p>
+                  <p><strong>Status:</strong> {selectedTicket.status}</p>
+                </div>
+              )}
+            </section>
           )}
 
           {activeSection === "Settings" && (
