@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/TicketRequests.css";
+import logoImage from "../../assets/logo.jpeg";
 import api from "../../api/axios";
-
 const TicketRequestForm = () => {
   const navigate = useNavigate();
 
@@ -127,9 +127,12 @@ const TicketRequestForm = () => {
     <section className="ticket-wrapper">
 
       <div className="ticket-header">
+        <span className="brand-icon">
+         <img src={logoImage} alt="Tick My Bus" />
+        </span>
 
-        <h1>Request Best Ticket Price</h1>
-
+        <h1>Request Best Ticket Price</h1>     
+         
         <p>
 
           Submit your travel request.
@@ -295,7 +298,9 @@ const TicketRequestForm = () => {
             </div> */}
 
             <div className="input-group full-width">
+             
               <label>Security Verification</label>
+              
               <div className="captcha-box compact">
                 <div className="captcha-question">{captcha.question} = ?</div>
                 <input
@@ -307,8 +312,10 @@ const TicketRequestForm = () => {
                   required
                 />
               </div>
+               
+
             </div>
-          </div>
+          {/* </div> */}
 
           <div className="form-actions">
             <label className="agree-box">
@@ -324,6 +331,7 @@ const TicketRequestForm = () => {
               Submit Ticket Price Request
             </button>
           </div>
+        </div>
         </div>
       </form>
 
