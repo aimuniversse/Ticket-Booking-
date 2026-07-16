@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/TicketRequests.css";
-import logoImage from "../../assets/logo.jpeg";
 import api from "../../api/axios";
 import TurnstileCaptcha from "../Security/TurnstileCaptcha";
 const TicketRequestForm = () => {
@@ -57,7 +56,9 @@ const TicketRequestForm = () => {
     }
 
     console.debug("API Payload:", payload);
-    const response = await api.post("customer/request/", payload);
+    const response = await api.post("customer/request/", payload, {
+      skipAuth: true,
+    });
 
     console.log("Response :", response.data);
 
@@ -122,10 +123,6 @@ const TicketRequestForm = () => {
     <section className="ticket-wrapper">
 
       <div className="ticket-header">
-        <span className="brand-icon">
-         <img src={logoImage} alt="Tick My Bus" />
-        </span>
-
         <h1>Request Best Ticket Price</h1>     
          
         <p>
@@ -180,16 +177,7 @@ const TicketRequestForm = () => {
                 required                 
               />
             </div>
-            <div className="input-group">
-              <label>Journey Time</label>
-              <input
-            type="time"
-                name="journey_time"
-                value={formData.journey_time}
-                onChange={handleChange}
-                required
-                 />
-            </div>
+           
 
             <div className="input-group">
               <label>Total Tickets</label>
@@ -295,24 +283,7 @@ const TicketRequestForm = () => {
             <div className="input-group full-width">
              
               <label>Security Verification</label>
-<<<<<<< HEAD
               <TurnstileCaptcha setToken={setCaptchaToken} />
-=======
-              
-              <div className="captcha-box compact">
-                <div className="captcha-question">{captcha.question} = ?</div>
-                <input
-                  type="number"
-                  name="captcha"
-                  value={formData.captcha}
-                  onChange={handleChange}
-                  placeholder="Answer"
-                  required
-                />
-              </div>
-               
-
->>>>>>> 20ca4c6af48f91614e301d1421335b87eafd24f3
             </div>
           {/* </div> */}
 
