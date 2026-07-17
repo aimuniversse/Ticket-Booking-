@@ -398,12 +398,12 @@ const TicketRequestForm = () => {
         </div>
       </div>
 
-      <div className="booking-benefits" aria-label="Booking benefits">
+      {/* <div className="booking-benefits" aria-label="Booking benefits">
         <div><span>⌁</span><p><strong>Zero Booking Fee</strong>No hidden charges</p></div>
         <div><span>▣</span><p><strong>Instant Confirmation</strong>Get ticket in seconds</p></div>
         <div><span>▤</span><p><strong>Multiple Payment Options</strong>UPI, card, and net banking</p></div>
         <div><span>✦</span><p><strong>Trusted by Millions</strong>Safe and reliable booking</p></div>
-      </div>
+      </div> */}
 
     </section>
 
