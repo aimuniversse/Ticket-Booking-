@@ -1,25 +1,25 @@
 .admin-page {
   min-height: 100vh;
-  background: #f3f6fb;
-  /* display:flex;
-  align-items:flex-start; */
+  background: #f6f7f9;
+  
 }
 
 .admin-layout {
   display: flex;
   
   gap: 1.5rem;
-  width: min(1400px, 100%);
+  width: min(140000px, 100%);
   margin: 0 auto;
   padding: 1.5rem;
+  
 }
 
 .admin-sidebar {
   width: 240px;
-  background: #ffffff;
+  background: #a63762;
   border-radius: 28px;
   box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
-  padding: 2rem 1.5rem;
+  padding: 2rem ;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;

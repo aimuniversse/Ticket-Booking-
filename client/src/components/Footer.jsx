@@ -10,7 +10,7 @@ import logoImage from "../assets/logoc.png";
 const companyLinks =[]
 const serviceLinks = [
   { label: 'Bus Ticket Booking', href: 'https://demo.tickmybus.com/' },
-  // { label: 'Bus Rental', href: '#' },
+  // { label: 'Operatore Login', href: '/operator-login' },
   // { label: 'Corporate Travel', href: '#' },
   // { label: 'School Trips', href: '#' },
   // { label: 'Holiday Packages', href: '#' },

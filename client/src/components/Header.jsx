@@ -76,10 +76,10 @@ function Header() {
 
         <div className="header-actions">
 
-          <a href="/operator-login" className="operator-btn">
+          {/* <a href="/operator-login" className="operator-btn">
             <FaUserTie />
             Operator Login
-          </a>
+          </a> */}
 
           {/* <a href="/admin-login" className="admin-btn">
             <FaUserShield />
