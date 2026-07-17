@@ -40,6 +40,22 @@ const CITY_NAMES = [
   "Puducherry", "Karaikal", "Mahe", "Yanam", "Port Blair", "Daman", "Diu", "Kavaratti", "Silvassa"
 ].sort((firstCity, secondCity) => firstCity.localeCompare(secondCity));
 
+const INITIAL_FORM_DATA = {
+  name: "",
+  phone_number: "",
+  from_location: "",
+  to_location: "",
+  journey_date: "",
+  total_tickets: 1,
+  bus_type: "",
+  boardingPoint: "",
+  dropPoint: "",
+  expected_price: "",
+  notes: "",
+  email: "",
+  agree: false,
+};
+
 const TicketRequestForm = () => {
   const navigate = useNavigate();
   const [captchaToken, setCaptchaToken] = useState("");
@@ -47,45 +63,30 @@ const TicketRequestForm = () => {
   const [activeSuggestion, setActiveSuggestion] = useState(-1);
   const closeCityDropdownTimer = useRef(null);
 
-  const [formData, setFormData] = useState({
-    name: "",
-    phone_number: "",
-    from_location: "",
-    to_location: "",
-    journey_date: "",
-    total_tickets: 1,
-    bus_type: "",
-    boardingPoint: "",
-    dropPoint: "",
-    expected_price: "",
-    notes: "",
-    email: "",
-    agree: false,
-  });
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  if (!captchaToken) {
-    alert("Please complete the security verification.");
-    return;
-  }
+    if (!captchaToken) {
+      alert("Please complete the security verification.");
+      return;
+    }
 
-  // Terms Validation
-  if (!formData.agree) {
-    alert("Please accept Terms & Conditions");
-    return;
-  }
+    if (!formData.agree) {
+      alert("Please accept Terms & Conditions");
+      return;
+    }
 
-  if (
-    formData.from_location.trim().toLocaleLowerCase() ===
-    formData.to_location.trim().toLocaleLowerCase()
-  ) {
-    alert("From and To locations must be different.");
-    return;
-  }
+    if (
+      formData.from_location.trim().toLocaleLowerCase() ===
+      formData.to_location.trim().toLocaleLowerCase()
+    ) {
+      alert("From and To locations must be different.");
+      return;
+    }
 
-  try {
+    try {
     const payload = {
       name: formData.name,
       phone_number: formData.phone_number,
@@ -98,7 +99,15 @@ const TicketRequestForm = () => {
       turnstile_token: captchaToken,
     };
 
-    if (!payload.name || !payload.phone_number || !payload.from_location || !payload.to_location || !payload.journey_date || !payload.bus_type || !payload.expected_price) {
+    if (
+      !payload.name ||
+      !payload.phone_number ||
+      !payload.from_location ||
+      !payload.to_location ||
+      !payload.journey_date ||
+      !payload.bus_type ||
+      !payload.expected_price
+    ) {
       alert("Please fill in all required fields before submitting.");
       return;
     }
@@ -117,32 +126,18 @@ const TicketRequestForm = () => {
     alert("Ticket Request Submitted Successfully!");
 
     // Reset Form
-    setFormData({
-      name: "",
-      phone_number: "",
-      from_location: "",
-      to_location: "",
-      journey_date: "",
-      total_tickets: 1,
-      bus_type: "",
-      boardingPoint: "",
-      dropPoint: "",
-      expected_price: "",
-      notes: "",
-      email: "",
-      agree: false,
-    });
+    setFormData(INITIAL_FORM_DATA);
     setCaptchaToken("");
 
-  } catch (error) {
+    } catch (error) {
     console.error(error.response?.data || error);
 
     alert(
       error.response?.data?.message ||
       "Failed to submit ticket request."
     );
-  }
-};
+    }
+  };
 
   const handleChange = (e) => {
 
@@ -282,9 +277,10 @@ const TicketRequestForm = () => {
             <li><span>◉</span> 24/7 Customer Support</li>
             <li><span>⌖</span> Live Tracking</li>
           </ul>
-        </aside>
-        <div className="ticket-booking-area">
-
+         </aside>
+         
+         <div className="ticket-booking-area">
+        
       <form className="ticket-form" onSubmit={handleSubmit}>
         <div className="form-card form-panel">
           <div className="form-card-intro">
@@ -395,7 +391,6 @@ const TicketRequestForm = () => {
             </button>
           </div>
         </div>
-        
       </form>
         </div>
       </div>
