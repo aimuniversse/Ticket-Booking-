@@ -50,24 +50,32 @@
   margin: 34px auto 12px;
 }
 
+.ticket-page-layout,
+.ticket-booking-area,
+.ticket-form,
+.form-panel,
+.booking-benefits {
+  max-width: 100%;
+}
+
 .journey-promo h2 {
   max-width: 210px;
   margin: 0;
-  color: #0d1f45;
+  color: #b82c2c;
   font-size: clamp(1.45rem, 3vw, 2rem);
   line-height: 1.22;
 }
 
 .journey-promo h2 span {
   display: block;
-  color: #2d5aa6;
+  color: #b82c2c;
 }
 
 .journey-promo > p {
   max-width: 195px;
   margin: 12px 0 22px;
-  color: #263757;
-  font-size: 0.8rem;
+  color: black;
+  font-size: 1rem;
   line-height: 1.6;
 }
 
@@ -83,8 +91,8 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #263757;
-  font-size: 0.73rem;
+  color: #090a0a;
+  font-size: 0.93rem;
   font-weight: 500;
 }
 
@@ -134,6 +142,7 @@
   background: #ebe8ff;
   color: #563fc9;
   font-size: 1.05rem;
+  /* background: url("../assets/logo.jpeg"); */
 }
 
 .form-card-intro strong {
@@ -415,6 +424,28 @@
   }
 }
 
+@media (max-width: 700px) {
+  .ticket-page-layout {
+    gap: 20px;
+  }
+
+  .form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .form-card-intro {
+    margin-bottom: 18px;
+  }
+
+  .input-group input,
+  .input-group select,
+  .captcha-box input,
+  .ticket-counter {
+    min-height: 40px;
+  }
+}
+
 @media (max-width: 600px) {
   .ticket-wrapper {
     padding: 0 12px 20px;
@@ -451,5 +482,52 @@
 
   .ticket-wrapper::before {
     display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .ticket-wrapper {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .ticket-wrapper .header-actions {
+    display: none;
+  }
+
+  .ticket-wrapper .header-inner {
+    padding: 0.7rem 0.85rem;
+  }
+
+  .ticket-wrapper .brand-text strong {
+    font-size: 0.9rem;
+  }
+
+  .form-panel {
+    padding: 14px 12px;
+    border-radius: 10px;
+  }
+
+  .form-card-intro {
+    gap: 8px;
+  }
+
+  .form-card-intro p {
+    max-width: 190px;
+    line-height: 1.35;
+  }
+
+  .booking-benefits {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-benefits > div {
+    min-height: 48px;
+    border-right: 0;
+    border-bottom: 1px solid #e0e8f2;
+  }
+
+  .booking-benefits > div:last-child {
+    border-bottom: 0;
   }
 }

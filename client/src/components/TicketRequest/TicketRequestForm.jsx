@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../../styles/TicketRequests.css";
 import api from "../../api/axios";
 import TurnstileCaptcha from "../Security/TurnstileCaptcha";
+// import logoImage from "../assets/logo.jpeg";
 import Header from "../Header";
 
 const CITY_NAMES = [
@@ -284,7 +285,9 @@ const TicketRequestForm = () => {
       <form className="ticket-form" onSubmit={handleSubmit}>
         <div className="form-card form-panel">
           <div className="form-card-intro">
-            <span className="form-card-icon">✦</span>
+            <span className="form-card-icon">✦
+                {/* <img src={logoImage} alt="Tick My Bus" />  */}
+            </span>
             <div>
               <strong>Ticket Booking</strong>
               <p>Fill in your travel details. It only takes a minute.</p>
